@@ -10,8 +10,8 @@ import {
 } from 'reactstrap';
 
 const Film = (props) => {
-    const [film, setFilm] = useState();
-    const {gFilm, itemId} = props;   
+    const [film, setFilm] = useState([]);
+    const {gFilm, itemId, isOpen} = props;   
 
     useEffect(() => {   
         axios.get(gFilm)
@@ -21,7 +21,7 @@ const Film = (props) => {
             .catch((err) => {
                 console.log(err);
             }); 
-    }, []);
+    }, [isOpen]);
      
     return (
         <AccordionItem> 
