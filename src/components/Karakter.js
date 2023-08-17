@@ -11,9 +11,9 @@ import {
 } from 'reactstrap';
 
 const Karakter = (props) => {
-    const {karakter, itemId, filmler} = props;
-    //const [filmler, setFilmler] = useState();
+    const {karakter, itemId} = props;
     const [open, setOpen] = useState('1');
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggle = (id) => {
         if (open === id) {
@@ -34,7 +34,7 @@ const Karakter = (props) => {
     const SkinColor = styled.p``; 
 
     return (
-        <AccordionItem>
+        <AccordionItem onClick={() => {setIsOpen(!isOpen)}}>
             <AccordionHeader targetId={itemId.toString()}>{karakter.name}</AccordionHeader>
             <AccordionBody accordionId={itemId.toString()} className='accordion-body'>
                 <Gender>Gender: {karakter.gender}</Gender> 
@@ -43,17 +43,15 @@ const Karakter = (props) => {
                 <BirthYear>Birth Year: {karakter.birth_year}</BirthYear> 
                 <EyeColor>Eye Color: {karakter.eye_color}</EyeColor> 
                 <HairColor>Hair Color: {karakter.hair_color}</HairColor> 
-                <SkinColor>Skin Color: {karakter.skin_color}</SkinColor>
-                { filmler &&
-                    <Accordion open={open} toggle={toggle}>
-                        { 
-                            filmler.map((item) => {
-                                filmId++; 
-                                return (<Film gFilm={item} itemId={filmId}/>) 
-                            })
-                        }
-                    </Accordion>
-                }
+                <SkinColor>Skin Color: {karakter.skin_color}</SkinColor> 
+                <Accordion open={open} toggle={toggle}>
+                    {
+                        karakter.films.map((item) => {
+                            filmId++;
+                            return (<Film gFilm={item} itemId={filmId} isOpen={isOpen}/>)
+                        })
+                    }
+                </Accordion>
             </AccordionBody>
         </AccordionItem>
     );
